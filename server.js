@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
+const apiRouter = require('./apiRouter');
+app.use('/api', apiRouter);
 
 const { quotes } = require('./data');
 const { getRandomElement } = require('./utils');
+
+
 
 const PORT = process.env.PORT || 4001;
 
