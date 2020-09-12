@@ -55,7 +55,7 @@ apiRouter.get('/quotes', (req, res, next) => {
         }
         return arr;
     }
-    
+
     if (searchTerms() === 0) {
         res.send(arrayQuotes());
     } else if (personIndex()) {
@@ -63,8 +63,23 @@ apiRouter.get('/quotes', (req, res, next) => {
     } else if (!personIndex()) {
         res.send([]);
     }
-
-
 });
+
+apiRouter.post('/quotes', (req, res, next) => {
+    const newQuote = req.query.quote;
+    const newPerson = req.query.person;
+    const fullQuote = {
+        quote: newQuote,
+        person: newPerson
+    }
+    if (Object.keys(newQuote).length !== 0 && Object.keys(newPerson).length !== 0) {
+        quotes.push(fullQuote);
+        res.status(201).send({
+            quote: fullQuote
+        })
+    } else {
+        res.status(400).send('Please enter a valid quote and author.');
+    }
+})
 
 module.exports = apiRouter;
